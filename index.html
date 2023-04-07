@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slots Game</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+		table {
+			margin: 20px auto;
+			border-collapse: collapse;
+		}
+		td {
+			padding: 10px;
+			border: 1px solid black;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<h1>Slots Game</h1>
+	
+	<div>
+		<p>Balance: <span id="balance"></span></p>
+		<p>Bet Amount: <input type="number" id="betAmount" min="1" max="100"></p>
+		<button id="spinButton">Spin</button>
+	</div>
+	
+	<table>
+		<tr>
+			<td><span id="reel1"></span></td>
+			<td><span id="reel2"></span></td>
+			<td><span id="reel3"></span></td>
+		</tr>
+	</table>
+	
+	<div>
+		<p>Payouts:</p>
+		<ul id="payouts">
+			<li><span id="symbol1"></span>: <span id="payout1"></span></li>
+			<li><span id="symbol2"></span>: <span id="payout2"></span></li>
+			<li><span id="symbol3"></span>: <span id="payout3"></span></li>
+			<li><span id="symbol4"></span>: <span id="payout4"></span></li>
+			<li><span id="symbol5"></span>: <span id="payout5"></span></li>
+		</ul>
+	</div>
+	
+	<div>
+		<p>Results:</p>
+		<ul id="results">
+			<li><span id="totalPayout"></span></li>
+			<li><span id="newBalance"></span></li>
+		</ul>
+	</div>
+	
+	<div id="bonusFeature" style="display: none;">
+		<p>Congratulations! You've unlocked the bonus feature.</p>
+		<button id="bonusButton">Play Bonus</button>
+	</div>
+	
+	<script>
+		// Define the symbols and their payouts
+		const symbols = {
+			"cherry": 2,
+			"lemon": 3,
+			"orange": 4,
+			"plum": 5,
+			"bell": 10,
+			"bar": 20,
+			"seven": 50,
+			"jackpot": 100
+		};
+		
+		// Define the reels and their starting positions
+		let reels = [
+			["cherry", "lemon", "orange", "plum", "bell", "bar", "seven", "jackpot"],
+			["cherry", "lemon", "orange", "plum", "bell", "bar", "seven", "jackpot"],
+			["cherry", "lemon", "orange", "plum", "bell", "bar", "seven", "jackpot"]
+		];
+		
+		// Define the bonus symbol
+		const bonusSymbol = "jackpot";
+		
+		// Initialize the balance and bet amount
+		let balance = 100;
+		let betAmount = 0;
+		
+		// Define the spin function
+		function spin() {
+			// Get the bet
+            betAmount = Number(document.getElementById("betAmount").value);
+		
+		// Check if the bet is valid
+		if (betAmount < 1 || betAmount > balance) {
+			alert("Invalid bet amount");
+			return;
+		}
+		
+		// Update the balance
+		balance -= betAmount;
+		document.getElementById("balance").textContent = balance;
+		
+		// Spin the reels
+		let results = [];
+		for (let i = 0; i < reels.length; i++) {
+			let index = Math.floor(Math.random() * reels[i].length);
+			results.push(reels[i][index]);
+			document.getElementById(`reel${i+1}`).textContent = reels[i][index];
+		}
+		
+		// Calculate the total payout
+		let totalPayout = 0;
+		let bonusPayout = 0;
+		for (let symbol in symbols) {
+			let count = results.filter(result => result === symbol).length;
+			let payout = symbols[symbol] * count;
+			if (symbol === bonusSymbol && count === 3) {
+				bonusPayout = balance;
+				document.getElementById("bonusFeature").style.display = "block";
+			} else {
+				totalPayout += payout;
+			}
+			document.getElementById(`symbol${symbol.charAt(0).toUpperCase() + symbol.slice(1)}`).textContent = symbol;
+			document.getElementById(`payout${symbols[symbol]}`).textContent = payout;
+		}
+		
+		// Calculate the new balance and update the results
+		let newBalance = balance + totalPayout + bonusPayout;
+		document.getElementById("totalPayout").textContent = `Total Payout: ${totalPayout + bonusPayout}`;
+		document.getElementById("newBalance").textContent = `New Balance: ${newBalance}`;
+		balance = newBalance;
+		document.getElementById("balance").textContent = balance;
+		
+		// Reset the reels and bet amount
+		reels = [
+			["cherry", "lemon", "orange", "plum", "bell", "bar", "seven", "jackpot"],
+			["cherry", "lemon", "orange", "plum", "bell", "bar", "seven", "jackpot"],
+			["cherry", "lemon", "orange", "plum", "bell", "bar", "seven", "jackpot"]
+		];
+		document.getElementById("betAmount").value = "";
+		
+		// Hide the bonus feature
+		document.getElementById("bonusFeature").style.display = "none";
+	}
+	
+	// Define the play bonus function
+	function playBonus() {
+		// Spin the bonus reel
+		let bonusReel = ["cherry", "lemon", "orange", "plum", "bell", "bar", "seven", "jackpot"];
+		let index = Math.floor(Math.random() * bonusReel.length);
+		let result = bonusReel[index];
+		
+		// Calculate the bonus payout and update the results
+		let bonusPayout = symbols[bonusSymbol];
+		document.getElementById("totalPayout").textContent = `Total Payout: ${bonusPayout}`;
+		let newBalance = balance + bonusPayout;
+		document.getElementById("newBalance").textContent = `New Balance: ${newBalance}`;
+		balance = newBalance;
+		document.getElementById("balance").textContent = balance;
+		
+		// Hide the bonus feature
+		document.getElementById("bonusFeature").style.display = "none";
+	}
+	
+	// Add the spin button event listener
+	document.getElementById("spinButton").addEventListener("click", spin);
+	
+	// Add the bonus button event listener
+document.getElementById("bonusButton").addEventListener("click", playBonus);```

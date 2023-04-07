@@ -1,0 +1,135 @@
+body {
+	font-family: Arial, sans-serif;
+}
+
+h1 {
+	text-align: center;
+	margin-top: 20
+px;
+margin-bottom: 40px;
+}
+
+#gameContainer {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+#reelsContainer {
+display: flex;
+justify-content: center;
+margin-bottom: 20px;
+}
+
+#reel1, #reel2, #reel3 {
+width: 100px;
+height: 150px;
+border: 1px solid black;
+margin-right: 20px;
+}
+
+#symbolsContainer {
+display: flex;
+justify-content: center;
+margin-bottom: 20px;
+}
+
+.symbol {
+width: 60px;
+height: 60px;
+background-color: yellow;
+border: 1px solid black;
+text-align: center;
+line-height: 60px;
+font-weight: bold;
+font-size: 1.2em;
+margin-right: 10px;
+}
+
+#symbolCherry {
+background-color: red;
+}
+
+#symbolLemon {
+background-color: orange;
+}
+
+#symbolOrange {
+background-color: blue;
+color: white;
+}
+
+#symbolPlum {
+background-color: purple;
+color: white;
+}
+
+#symbolBell {
+background-color: green;
+color: white;
+}
+
+#symbolBar {
+background-color: gray;
+color: white;
+}
+
+#symbolSeven {
+background-color: gold;
+}
+
+#symbolJackpot {
+background-color: pink;
+}
+
+#payoutsContainer {
+display: flex;
+justify-content: center;
+margin-bottom: 20px;
+}
+
+.payout {
+margin-right: 20px;
+}
+
+#controlsContainer {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-bottom: 20px;
+}
+
+#balanceContainer {
+margin-bottom: 10px;
+}
+
+#betContainer {
+margin-bottom: 10px;
+}
+
+#spinButton {
+margin-bottom: 10px;
+}
+
+#resultsContainer {
+margin-bottom: 20px;
+}
+
+#bonusFeature {
+margin-top: 40px;
+text-align: center;
+}
+
+#bonusReel {
+width: 100px;
+height: 150px;
+border: 1px solid black;
+margin-bottom: 20px;
+}
+
+#totalPayout, #newBalance {
+margin-bottom: 10px;
+font-weight: bold;
+font-size: 1.2em;
+}
+
